@@ -12,6 +12,7 @@ import CoreData
 enum SaveStatus {
     case saved
     case rolledBack
+    case noChanges
 }
 
 protocol StoreManager {
@@ -35,23 +36,33 @@ class CoreDataManager: StoreManager {
     
     /* block will be execute on background Thread, completion on Main */
     func save(_ block:(()-> Void)? = nil, completion:((SaveStatus)-> Void)? = nil) {
-        privateContext.perform {[weak self] in
+        DispatchQueue.global().async {[weak self] in
             guard let strongSelf = self else { return }
-            do {
-                block?()
-                try strongSelf.privateContext.save()
-                strongSelf.mainObjectContext.perform {[weak self] in
-                    do {
-                        try self?.mainObjectContext.save()
-                        completion?(.saved)
-                    } catch {
-                        completion?(.rolledBack)
-                        print("CoreData: Unresolved error \(error)")
-                    }
+            block?()
+            guard strongSelf.privateContext.hasChanges else {
+                DispatchQueue.main.async {
+                    completion?(.noChanges)
                 }
-            } catch {
-                completion?(.rolledBack)
-                print("CoreData: Unresolved error \(error)")
+                return
+            }
+            
+            strongSelf.privateContext.perform {[weak self] in
+                do {
+                    block?()
+                    try strongSelf.privateContext.save()
+                    strongSelf.mainObjectContext.perform {[weak self] in
+                        do {
+                            try self?.mainObjectContext.save()
+                            completion?(.saved)
+                        } catch {
+                            completion?(.rolledBack)
+                            print("CoreData: Unresolved error \(error)")
+                        }
+                    }
+                } catch {
+                    completion?(.rolledBack)
+                    print("CoreData: Unresolved error \(error)")
+                }
             }
         }
     }

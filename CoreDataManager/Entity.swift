@@ -13,6 +13,7 @@ extension NSManagedObject: Entity { }
 
 protocol Entity: class {
     var descriptionName: String { get }
+    var dateStamp: Date { get }
 }
 
 extension Entity where Self: NSManagedObject {
@@ -76,4 +77,9 @@ extension Entity where Self: NSManagedObject {
     var descriptionName: String {
         return Self.description()
     }
+    
+    var dateStamp: Date {
+        return Date()
+    }
+    
 }

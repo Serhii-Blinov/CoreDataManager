@@ -18,6 +18,12 @@ class ViewController: UIViewController {
             _ = User.createEntity()?.name = "Super user"
             _ = Friend.createEntity()?.name = "Friend"
             
+            _ = User.createEntity()?.name = "Super user"
+            _ = Friend.createEntity()?.name = "Friend"
+            
+            _ = User.createEntity()?.name = "Super user"
+            _ = Friend.createEntity()?.name = "Friend"
+//
         }) { status in
             print(status)
             var users = [Entity]()
@@ -25,6 +31,7 @@ class ViewController: UIViewController {
             users.append(contentsOf: Friend.all()!)
             for user in users {
                 print(user.descriptionName)
+                print(user.dateStamp)
             }
         }
     }
