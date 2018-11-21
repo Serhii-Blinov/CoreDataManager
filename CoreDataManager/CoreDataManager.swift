@@ -1,0 +1,119 @@
+//
+//  CoreDataManager.swift
+//  CoreDataMnager
+//
+//  Created by Sergey on 11/21/18.
+//  Copyright © 2018 sblinov.com. All rights reserved.
+//
+
+import Foundation
+import CoreData
+
+enum SaveStatus {
+    case saved
+    case rolledBack
+}
+
+protocol StoreManager {
+    var privateContext: NSManagedObjectContext { get }
+    var mainContext: NSManagedObjectContext { get }
+    
+    func save(_ block:(()-> Void)?, completion:((SaveStatus)-> Void)?)
+}
+
+class CoreDataManager: StoreManager {
+    
+    static var shared = CoreDataManager()
+    
+    var privateContext: NSManagedObjectContext {
+        return privateWriterContext
+    }
+    
+    var mainContext: NSManagedObjectContext {
+        return mainObjectContext
+    }
+    
+    /* block will be execute on background Thread, completion on Main */
+    func save(_ block:(()-> Void)? = nil, completion:((SaveStatus)-> Void)? = nil) {
+        privateContext.perform {[weak self] in
+            guard let strongSelf = self else { return }
+            do {
+                block?()
+                try strongSelf.privateContext.save()
+                strongSelf.mainObjectContext.perform {[weak self] in
+                    do {
+                        try self?.mainObjectContext.save()
+                        completion?(.saved)
+                    } catch {
+                        completion?(.rolledBack)
+                        print("CoreData: Unresolved error \(error)")
+                    }
+                }
+            } catch {
+                completion?(.rolledBack)
+                print("CoreData: Unresolved error \(error)")
+            }
+        }
+    }
+    
+    private init() { }
+    
+    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
+        do {
+            return try NSPersistentStoreCoordinator.coordinator(name: "CoreDataModel")
+        } catch {
+            print("CoreData: Unresolved error \(error)")
+        }
+        return nil
+    }()
+    
+    private lazy var privateWriterContext: NSManagedObjectContext = {
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        
+        return managedObjectContext
+    }()
+    
+    private lazy var mainObjectContext: NSManagedObjectContext = {
+        let coordinator = self.persistentStoreCoordinator
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.parent = self.privateWriterContext
+        
+        return managedObjectContext
+    }()
+}
+
+extension NSPersistentStoreCoordinator {
+    
+    public enum CoordinatorError: Error {
+        case modelFileNotFound
+        case modelCreationError
+        case storePathNotFound
+    }
+    
+    static func coordinator(name: String) throws -> NSPersistentStoreCoordinator? {
+        guard let modelURL = Bundle.main.url(forResource: name, withExtension: "momd") else {
+            throw CoordinatorError.modelFileNotFound
+        }
+        
+        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
+            throw CoordinatorError.modelCreationError
+        }
+        
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
+        
+        guard let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
+            throw CoordinatorError.storePathNotFound
+        }
+        
+        do {
+            let url = documents.appendingPathComponent(String(format: "%@.sqlite", name))
+            let options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption: true]
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
+        } catch {
+            throw error
+        }
+        
+        return coordinator
+    }
+}
