@@ -20,10 +20,7 @@ extension Entity where Self: NSManagedObject {
     
     static func createEntity(context: NSManagedObjectContext = CoreDataManager.shared.privateContext) -> Self? {
         let entity = NSEntityDescription.entity(forEntityName: Self.entity().managedObjectClassName, in: context)
-        guard let object = NSManagedObject(entity: entity!, insertInto: context) as? Self
-            else {
-                fatalError("Error create Entity")
-        }
+        guard let object = NSManagedObject(entity: entity!, insertInto: context) as? Self else { fatalError("Error create Entity") }
         return object
     }
     
@@ -40,7 +37,7 @@ extension Entity where Self: NSManagedObject {
     static func all(context: NSManagedObjectContext = CoreDataManager.shared.mainContext,
                     predicate: NSPredicate? = nil,
                     sort: [NSSortDescriptor]? = nil) -> [Self]? {
-        let request = fetchRequest(predicate: predicate, sort: sort)
+        guard let request = fetchRequest(predicate: predicate, sort: sort) as? NSFetchRequest<Self> else { return nil }
         do {
             return try context.fetch(request)
         } catch {
@@ -53,7 +50,7 @@ extension Entity where Self: NSManagedObject {
                           predicate: NSPredicate? = nil,
                           sort: [NSSortDescriptor]? = nil) -> Bool {
         let request = fetchRequest(predicate: predicate, sort: sort)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request as! NSFetchRequest<NSFetchRequestResult>)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         do {
             try context.execute(deleteRequest)
             try context.save()
@@ -65,8 +62,8 @@ extension Entity where Self: NSManagedObject {
     }
     
     private static func fetchRequest(predicate: NSPredicate? = nil,
-                                     sort: [NSSortDescriptor]? = nil) -> NSFetchRequest<Self> {
-        let request = NSFetchRequest<Self>(entityName: Self.entity().managedObjectClassName)
+                                     sort: [NSSortDescriptor]? = nil) -> NSFetchRequest<NSFetchRequestResult> {
+        let request = Self.fetchRequest()
         request.predicate = predicate
         request.returnsObjectsAsFaults = false
         request.sortDescriptors = sort

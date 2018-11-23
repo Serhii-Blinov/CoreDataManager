@@ -119,8 +119,12 @@ extension NSPersistentStoreCoordinator {
         
         do {
             let url = documents.appendingPathComponent(String(format: "%@.sqlite", name))
-            let options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption: true]
+            let options = [NSMigratePersistentStoresAutomaticallyOption: true,
+                           NSPersistentStoreFileProtectionKey: FileProtectionType.complete,
+                           NSInferMappingModelAutomaticallyOption: true] as [String : Any]
+            
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
+            try FileManager.default.setAttributes([FileAttributeKey.protectionKey : FileProtectionType.complete], ofItemAtPath: url.path)
         } catch {
             throw error
         }
