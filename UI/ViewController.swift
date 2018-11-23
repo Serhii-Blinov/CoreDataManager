@@ -9,40 +9,45 @@
 import UIKit
 import CoreData
 
-extension String {
-    
-    static func random(length: Int = 20) -> String {
-        let base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        var randomString: String = ""
-        
-        for _ in 0..<length {
-            let randomValue = arc4random_uniform(UInt32(base.count))
-            randomString += "\(base[base.index(base.startIndex, offsetBy: Int(randomValue))])"
-        }
-        return randomString
-    }
-}
-
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = self
+            tableView.dataSource = self
+        }
+    }
+    
+    var users = User.all()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        _ = User.deleteAll()
         
-
-        for user in  User.all()!{
-            print(user.name)
-            print(user.bdate)
-        }
-//        
         CoreDataManager.shared.save({
-           let user = User.createEntity()
+            let user = User.createEntity()
             user?.name = String.random()
             user?.bdate = Date()
-    
-//
+            
         }) { status in
-
+            self.users = User.all()
+            self.tableView.reloadData()
         }
     }
 }
 
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? TableViewCell else { return UITableViewCell() }
+        guard let item = users?[indexPath.row] else { return UITableViewCell() }
+        cell.titleLabel.text = item.name
+        cell.detailLabel.text = item.dateStamp.toString()
+        
+        return cell
+    }
+}

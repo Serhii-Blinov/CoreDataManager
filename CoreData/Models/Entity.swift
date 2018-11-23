@@ -78,5 +78,4 @@ extension Entity where Self: NSManagedObject {
     var dateStamp: Date {
         return Date()
     }
-    
 }

@@ -12,14 +12,15 @@ class DateEncryptionTransformer: EncryptionTransformer {
     
     override func transformedValue(_ value: Any?) -> Any? {
         guard let date = value as? Date else { return nil }
-        return super.transformedValue(date.stringlize())
+        
+        return super.transformedValue(date.toString())
     }
     
     override func reverseTransformedValue(_ value: Any?) -> Any?{
         guard let data = value as? Data,
             let string = super.reverseTransformedValue(data) as? String else { return nil }
         
-        return string .datelize()
+        return string.toDate()
     }
 }
 
@@ -63,20 +64,4 @@ class EncryptionTransformer: ValueTransformer {
     lazy var iv: Data = {
         return "1234567891234567".data(using: .utf8)!  //TODO: put it to keychain
     }()
-}
-
-extension Date {
-    func stringlize() -> String {
-        let formater = DateFormatter()
-        formater.dateFormat = "yyyyMMddss"
-        return formater.string(from: self)
-    }
-}
-
-extension String {
-    func datelize() -> Date? {
-        let formater = DateFormatter()
-        formater.dateFormat = "yyyyMMddss"
-        return formater.date(from: self)
-    }
 }
