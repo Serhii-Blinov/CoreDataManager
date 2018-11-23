@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A53B67C221A84B6100BEFED8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B67C021A84B6100BEFED8 /* User.swift */; };
+		A53B67CC21A85CD700BEFED8 /* MapModel.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A53B67CB21A85CD700BEFED8 /* MapModel.xcmappingmodel */; };
 		A595C57221A594FE009AFFB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C57121A594FE009AFFB9 /* AppDelegate.swift */; };
 		A595C57421A594FE009AFFB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C57321A594FE009AFFB9 /* ViewController.swift */; };
 		A595C57721A594FE009AFFB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A595C57521A594FE009AFFB9 /* Main.storyboard */; };
@@ -15,9 +17,14 @@
 		A595C58721A5953D009AFFB9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C58621A5953D009AFFB9 /* CoreDataManager.swift */; };
 		A595C5AD21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A595C5AB21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld */; };
 		A595C5B321A5AACC009AFFB9 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C5B221A5AACC009AFFB9 /* Entity.swift */; };
+		A5DF1A1A21A6C7BF002F748F /* Crypter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF1A1921A6C7BF002F748F /* Crypter.swift */; };
+		A5DF1A1D21A6C969002F748F /* EncryptionTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A53B67C021A84B6100BEFED8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A53B67C421A852F800BEFED8 /* CoreDataModelV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModelV2.xcdatamodel; sourceTree = "<group>"; };
+		A53B67CB21A85CD700BEFED8 /* MapModel.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MapModel.xcmappingmodel; sourceTree = "<group>"; };
 		A595C56E21A594FE009AFFB9 /* CoreDataManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A595C57121A594FE009AFFB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A595C57321A594FE009AFFB9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,6 +35,9 @@
 		A595C58621A5953D009AFFB9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		A595C5AC21A59BF0009AFFB9 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		A595C5B221A5AACC009AFFB9 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		A5DF1A1921A6C7BF002F748F /* Crypter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypter.swift; sourceTree = "<group>"; };
+		A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionTransformer.swift; sourceTree = "<group>"; };
+		A5DF1A1E21A6D3CC002F748F /* CoreDataManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoreDataManager.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +83,14 @@
 		A595C57021A594FE009AFFB9 /* CoreDataManager */ = {
 			isa = PBXGroup;
 			children = (
+				A53B67C021A84B6100BEFED8 /* User.swift */,
+				A5DF1A1E21A6D3CC002F748F /* CoreDataManager.entitlements */,
 				A595C5B221A5AACC009AFFB9 /* Entity.swift */,
 				A595C58621A5953D009AFFB9 /* CoreDataManager.swift */,
 				A595C5AB21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld */,
+				A53B67CB21A85CD700BEFED8 /* MapModel.xcmappingmodel */,
+				A5DF1A1921A6C7BF002F748F /* Crypter.swift */,
+				A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */,
 			);
 			path = CoreDataManager;
 			sourceTree = "<group>";
@@ -121,6 +136,11 @@
 				TargetAttributes = {
 					A595C56D21A594FE009AFFB9 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -160,8 +180,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A53B67CC21A85CD700BEFED8 /* MapModel.xcmappingmodel in Sources */,
 				A595C57421A594FE009AFFB9 /* ViewController.swift in Sources */,
 				A595C57221A594FE009AFFB9 /* AppDelegate.swift in Sources */,
+				A5DF1A1D21A6C969002F748F /* EncryptionTransformer.swift in Sources */,
+				A5DF1A1A21A6C7BF002F748F /* Crypter.swift in Sources */,
+				A53B67C221A84B6100BEFED8 /* User.swift in Sources */,
 				A595C5B321A5AACC009AFFB9 /* Entity.swift in Sources */,
 				A595C58721A5953D009AFFB9 /* CoreDataManager.swift in Sources */,
 				A595C5AD21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld in Sources */,
@@ -310,6 +334,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CoreDataManager/CoreDataManager.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V73QP9H7KX;
 				INFOPLIST_FILE = "$(SRCROOT)/App/Info.plist";
@@ -328,6 +353,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CoreDataManager/CoreDataManager.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V73QP9H7KX;
 				INFOPLIST_FILE = "$(SRCROOT)/App/Info.plist";
@@ -369,11 +395,13 @@
 		A595C5AB21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A53B67C421A852F800BEFED8 /* CoreDataModelV2.xcdatamodel */,
 				A595C5AC21A59BF0009AFFB9 /* CoreDataModel.xcdatamodel */,
 			);
-			currentVersion = A595C5AC21A59BF0009AFFB9 /* CoreDataModel.xcdatamodel */;
+			currentVersion = A53B67C421A852F800BEFED8 /* CoreDataModelV2.xcdatamodel */;
 			path = CoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
+			usesTabs = 0;
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */

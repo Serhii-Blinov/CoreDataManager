@@ -9,30 +9,39 @@
 import UIKit
 import CoreData
 
+extension String {
+    
+    static func random(length: Int = 20) -> String {
+        let base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        var randomString: String = ""
+        
+        for _ in 0..<length {
+            let randomValue = arc4random_uniform(UInt32(base.count))
+            randomString += "\(base[base.index(base.startIndex, offsetBy: Int(randomValue))])"
+        }
+        return randomString
+    }
+}
+
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        for user in  User.all()!{
+            print(user.name)
+            print(user.bdate)
+        }
+//        
         CoreDataManager.shared.save({
-            _ = User.createEntity()?.name = "Super user"
-            _ = Friend.createEntity()?.name = "Friend"
-            
-            _ = User.createEntity()?.name = "Super user"
-            _ = Friend.createEntity()?.name = "Friend"
-            
-            _ = User.createEntity()?.name = "Super user"
-            _ = Friend.createEntity()?.name = "Friend"
+           let user = User.createEntity()
+            user?.name = String.random()
+            user?.bdate = Date()
+    
 //
         }) { status in
-            print(status)
-            var users = [Entity]()
-            users.append(contentsOf: User.all()!)
-            users.append(contentsOf: Friend.all()!)
-            for user in users {
-                print(user.descriptionName)
-                print(user.dateStamp)
-            }
+
         }
     }
 }
