@@ -18,20 +18,18 @@ protocol Entity: class {
 
 extension Entity where Self: NSManagedObject {
     
-    static func createEntity(context: NSManagedObjectContext = CoreDataManager.shared.privateContext) -> Self? {
-        guard let object = NSEntityDescription.insertNewObject(forEntityName: self.className,
-                                                               into: context) as? Self else { return nil }
-        return object
+    var descriptionName: String {
+        return Self.description()
     }
     
-    func delete(mainContext: NSManagedObjectContext = CoreDataManager.shared.mainContext) {
-        let deleteRequest = NSBatchDeleteRequest(objectIDs: [self.objectID])
-        do {
-            try mainContext.execute(deleteRequest)
-            try mainContext.save()
-        } catch {
-            print("Failed daleteAll")
-        }
+    var dateStamp: Date {
+        return Date()
+    }
+    
+    static func createEntity(manager: StoreManager = CoreDataManager.shared) -> Self? {
+        guard let object = NSEntityDescription.insertNewObject(forEntityName: self.className,
+                                                               into: manager.privateContext) as? Self else { return nil }
+        return object
     }
     
     static func all(manager: StoreManager = CoreDataManager.shared,
@@ -62,6 +60,18 @@ extension Entity where Self: NSManagedObject {
         }
     }
     
+    static func fetchedResultsController(manager: StoreManager = CoreDataManager.shared,
+                                         predicate: NSPredicate? = nil,
+                                         sort: [NSSortDescriptor]? = nil,
+                                         cacheName: String = "Main") -> NSFetchedResultsController<Self> {
+        let request = fetchRequest(predicate: predicate, sort: sort)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
+                                                                  managedObjectContext: manager.privateContext,
+                                                                  sectionNameKeyPath: nil,
+                                                                  cacheName: cacheName)
+        return fetchedResultsController as! NSFetchedResultsController<Self>
+    }
+    
     private static func fetchRequest(predicate: NSPredicate? = nil,
                                      sort: [NSSortDescriptor]? = nil) -> NSFetchRequest<NSFetchRequestResult> {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.className)
@@ -72,11 +82,16 @@ extension Entity where Self: NSManagedObject {
         return request
     }
     
-    var descriptionName: String {
-        return Self.description()
-    }
-    
-    var dateStamp: Date {
-        return Date()
+    func delete(manager: StoreManager = CoreDataManager.shared,
+                completion:((SaveStatus)-> Void)? = nil) {
+        let deleteRequest = NSBatchDeleteRequest(objectIDs: [self.objectID])
+        do {
+            try manager.mainContext.execute(deleteRequest)
+            manager.save(nil) { status in
+                completion?(status)
+            }
+        } catch {
+            print("Failed daleteAll")
+        }
     }
 }
