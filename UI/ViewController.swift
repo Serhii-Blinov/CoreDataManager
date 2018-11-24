@@ -32,17 +32,19 @@ class ViewController: UIViewController {
             user?.name = String.random(length: 25)
             
         }) { [weak self] status in
-            self?.users = User.all()
             self?.tableView.reloadData()
         }
     }
     
-    var users = User.all()
+    var users: [User]? {
+        return User.all()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _ = User.deleteAll()
-        self.tableView.reloadData()
+        User.deleteAll { _ in
+            self.tableView.reloadData()
+        }
     }
 }
 

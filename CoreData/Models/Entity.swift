@@ -19,7 +19,7 @@ protocol Entity: class {
 extension Entity where Self: NSManagedObject {
     
     static func createEntity(context: NSManagedObjectContext = CoreDataManager.shared.privateContext) -> Self? {
-        guard let object = NSEntityDescription.insertNewObject(forEntityName: Self.entity().managedObjectClassName,
+        guard let object = NSEntityDescription.insertNewObject(forEntityName: self.className,
                                                                into: context) as? Self else { return nil }
         return object
     }
@@ -34,36 +34,37 @@ extension Entity where Self: NSManagedObject {
         }
     }
     
-    static func all(context: NSManagedObjectContext = CoreDataManager.shared.mainContext,
+    static func all(manager: StoreManager = CoreDataManager.shared,
                     predicate: NSPredicate? = nil,
                     sort: [NSSortDescriptor]? = nil) -> [Self]? {
         guard let request = fetchRequest(predicate: predicate, sort: sort) as? NSFetchRequest<Self> else { return nil }
         do {
-            return try context.fetch(request)
+            return try manager.mainContext.fetch(request)
         } catch {
             print("Failed all")
             return nil
         }
     }
     
-    static func deleteAll(context: NSManagedObjectContext = CoreDataManager.shared.privateContext,
+    static func deleteAll(manager: StoreManager = CoreDataManager.shared,
                           predicate: NSPredicate? = nil,
-                          sort: [NSSortDescriptor]? = nil) -> Bool {
+                          sort: [NSSortDescriptor]? = nil,
+                          completion:((SaveStatus)-> Void)? = nil) {
         let request = fetchRequest(predicate: predicate, sort: sort)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         do {
-            try context.execute(deleteRequest)
-            try context.save()
-            return true
+            try manager.privateContext.execute(deleteRequest)
+            manager.save(nil) { status in
+                completion?(status)
+            }
         } catch {
             print("Failed daleteAll")
-            return false
         }
     }
     
     private static func fetchRequest(predicate: NSPredicate? = nil,
                                      sort: [NSSortDescriptor]? = nil) -> NSFetchRequest<NSFetchRequestResult> {
-        let request = Self.fetchRequest()
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.className)
         request.predicate = predicate
         request.returnsObjectsAsFaults = false
         request.sortDescriptors = sort

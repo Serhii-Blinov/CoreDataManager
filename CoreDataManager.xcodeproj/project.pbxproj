@@ -12,6 +12,7 @@
 		A53B67D521A88C4300BEFED8 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B67D321A88C4300BEFED8 /* Date+Extensions.swift */; };
 		A5501EF821A8938400E9C3D2 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5501EF721A8938400E9C3D2 /* TableViewCell.swift */; };
 		A5501EFA21A8C63300E9C3D2 /* MapModel.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = A5501EF921A8C63300E9C3D2 /* MapModel.xcmappingmodel */; };
+		A5501EFC21A95BD200E9C3D2 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5501EFB21A95BD200E9C3D2 /* NSObject+Extensions.swift */; };
 		A595C57221A594FE009AFFB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C57121A594FE009AFFB9 /* AppDelegate.swift */; };
 		A595C57421A594FE009AFFB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C57321A594FE009AFFB9 /* ViewController.swift */; };
 		A595C57721A594FE009AFFB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A595C57521A594FE009AFFB9 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 		A53B67D321A88C4300BEFED8 /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		A5501EF721A8938400E9C3D2 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		A5501EF921A8C63300E9C3D2 /* MapModel.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MapModel.xcmappingmodel; sourceTree = "<group>"; };
+		A5501EFB21A95BD200E9C3D2 /* NSObject+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
 		A595C56E21A594FE009AFFB9 /* CoreDataManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A595C57121A594FE009AFFB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A595C57321A594FE009AFFB9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 		A53B67D121A88B5E00BEFED8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A5501EFB21A95BD200E9C3D2 /* NSObject+Extensions.swift */,
 				A53B67D321A88C4300BEFED8 /* Date+Extensions.swift */,
 				A53B67D221A88C4300BEFED8 /* String+Extensions.swift */,
 			);
@@ -217,6 +220,7 @@
 				A5501EF821A8938400E9C3D2 /* TableViewCell.swift in Sources */,
 				A595C58721A5953D009AFFB9 /* CoreDataManager.swift in Sources */,
 				A595C5AD21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld in Sources */,
+				A5501EFC21A95BD200E9C3D2 /* NSObject+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
