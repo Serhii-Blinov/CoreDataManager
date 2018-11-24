@@ -18,21 +18,31 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var addUserButton: UIButton! {
+        didSet {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: addUserButton)
+        }
+    }
+    
+    @IBAction func addUserAction(_ sender: Any) {
+        
+        CoreDataManager.shared.save({
+            let user = User.createEntity()
+            user?.bdate = Date()
+            user?.name = String.random(length: 25)
+            
+        }) { [weak self] status in
+            self?.users = User.all()
+            self?.tableView.reloadData()
+        }
+    }
+    
     var users = User.all()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         _ = User.deleteAll()
-        
-        CoreDataManager.shared.save({
-            let user = User.createEntity()
-            user?.name = String.random()
-            user?.bdate = Date()
-            
-        }) { status in
-            self.users = User.all()
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
 }
 
@@ -46,7 +56,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? TableViewCell else { return UITableViewCell() }
         guard let item = users?[indexPath.row] else { return UITableViewCell() }
         cell.titleLabel.text = item.name
-        cell.detailLabel.text = item.dateStamp.toString()
+        cell.detailLabel.text = item.bdate?.toString()
         
         return cell
     }

@@ -87,10 +87,19 @@
                     </view>
                     <navigationItem key="navigationItem" id="Af8-ba-ZKU"/>
                     <connections>
+                        <outlet property="addUserButton" destination="eCA-fB-FtK" id="lSP-Ch-jLl"/>
                         <outlet property="tableView" destination="UE9-yL-Jtk" id="dCa-mx-qKF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eCA-fB-FtK">
+                    <rect key="frame" x="0.0" y="0.0" width="126" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Add User"/>
+                    <connections>
+                        <action selector="addUserAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1iI-yy-sPJ"/>
+                    </connections>
+                </button>
             </objects>
             <point key="canvasLocation" x="-15.199999999999999" y="215.44227886056973"/>
         </scene>

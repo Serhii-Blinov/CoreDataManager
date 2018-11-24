@@ -19,8 +19,8 @@ protocol Entity: class {
 extension Entity where Self: NSManagedObject {
     
     static func createEntity(context: NSManagedObjectContext = CoreDataManager.shared.privateContext) -> Self? {
-        let entity = NSEntityDescription.entity(forEntityName: Self.entity().managedObjectClassName, in: context)
-        guard let object = NSManagedObject(entity: entity!, insertInto: context) as? Self else { fatalError("Error create Entity") }
+        guard let object = NSEntityDescription.insertNewObject(forEntityName: Self.entity().managedObjectClassName,
+                                                               into: context) as? Self else { return nil }
         return object
     }
     

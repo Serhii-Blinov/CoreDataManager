@@ -48,7 +48,6 @@ class CoreDataManager: StoreManager {
             
             strongSelf.privateContext.perform {[weak self] in
                 do {
-                    block?()
                     try strongSelf.privateContext.save()
                     strongSelf.mainObjectContext.perform {[weak self] in
                         do {
