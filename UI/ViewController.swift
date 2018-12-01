@@ -33,16 +33,9 @@ class ViewController: UIViewController {
     }
     
     private var _fetchedResultsController: NSFetchedResultsController<User>? = nil
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-  
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-//            User.deleteAll { _ in
-//                try? self.fetchedResultsController.performFetch()
-//                self.tableView.reloadData()
-//            }
-//        }
     }
     
     var fetchedResultsController: NSFetchedResultsController<User> {
@@ -108,9 +101,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 extension ViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        DispatchQueue.main.async {
-            self.tableView.beginUpdates()
-        }
+        self.tableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
@@ -125,24 +116,20 @@ extension ViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        DispatchQueue.main.async {
-            switch type {
-            case .insert:
-                self.tableView.insertRows(at: [newIndexPath!], with: .fade)
-            case .delete:
-                self.tableView.deleteRows(at: [indexPath!], with: .fade)
-            case .update:
-                self.configureCell(self.tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! User)
-            case .move:
-                self.configureCell(self.tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! User)
-                self.tableView.moveRow(at: indexPath!, to: newIndexPath!)
-            }
+        switch type {
+        case .insert:
+            self.tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            self.tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            self.configureCell(self.tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! User)
+        case .move:
+            self.configureCell(self.tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! User)
+            self.tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        DispatchQueue.main.async {
-            self.tableView.endUpdates()
-        }
+        self.tableView.endUpdates()
     }
 }

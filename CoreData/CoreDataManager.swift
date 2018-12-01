@@ -66,7 +66,7 @@ class CoreDataManager: StoreManager {
         }
     }
     
-    private init() { }
+    private init() {}
     
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         do {
@@ -79,16 +79,15 @@ class CoreDataManager: StoreManager {
     
     private lazy var privateWriterContext: NSManagedObjectContext = {
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        managedObjectContext.parent = self.mainContext
         
         return managedObjectContext
     }()
     
     private lazy var mainObjectContext: NSManagedObjectContext = {
-        let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        managedObjectContext.parent = self.privateWriterContext
-        
+        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+     
         return managedObjectContext
     }()
 }

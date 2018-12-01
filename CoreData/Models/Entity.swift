@@ -66,7 +66,7 @@ extension Entity where Self: NSManagedObject {
                                          cacheName: String = "Main") -> NSFetchedResultsController<Self> {
         let request = fetchRequest(predicate: predicate, sort: sort)
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                                  managedObjectContext: manager.privateContext,
+                                                                  managedObjectContext: manager.mainContext,
                                                                   sectionNameKeyPath: nil,
                                                                   cacheName: cacheName)
         return fetchedResultsController as! NSFetchedResultsController<Self>
