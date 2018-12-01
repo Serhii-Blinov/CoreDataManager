@@ -24,6 +24,8 @@ class ViewController: UIViewController {
         }
     }
     
+    let fetchedResultsController = User.fetchedResultsController(sort: [NSSortDescriptor(key:"bdate", ascending: false)])
+    
     @IBAction func addUserAction(_ sender: Any) {
         CoreDataManager.shared.save ({
             let user = User.createEntity()
@@ -32,41 +34,27 @@ class ViewController: UIViewController {
         })
     }
     
-    private var _fetchedResultsController: NSFetchedResultsController<User>? = nil
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    var fetchedResultsController: NSFetchedResultsController<User> {
-        if _fetchedResultsController != nil {
-            return _fetchedResultsController!
-        }
-        
-        let aFetchedResultsController = User.fetchedResultsController(sort: [NSSortDescriptor(key:"bdate", ascending: false)])
-        aFetchedResultsController.delegate = self
-        _fetchedResultsController = aFetchedResultsController
-        
-        try? aFetchedResultsController.performFetch()
-        
-        return _fetchedResultsController!
+        self.fetchedResultsController.delegate = self
+        try? self.fetchedResultsController.performFetch()
     }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
+        return self.fetchedResultsController.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = fetchedResultsController.sections![section]
+        let sectionInfo = self.fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? TableViewCell else { return UITableViewCell() }
-        let item = fetchedResultsController.object(at: indexPath)
+        let item = self.fetchedResultsController.object(at: indexPath)
         cell.titleLabel.text = item.name
         cell.detailLabel.text = item.bdate?.toString()
         
@@ -79,15 +67,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let context = fetchedResultsController.managedObjectContext
-            context.delete(fetchedResultsController.object(at: indexPath))
-            
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
+            let user = (self.fetchedResultsController.object(at: indexPath))
+            user.delete()
         }
     }
     
@@ -107,9 +88,9 @@ extension ViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
         case .insert:
-            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+            self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
         case .delete:
-            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+            self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
         default:
             return
         }

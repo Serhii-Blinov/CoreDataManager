@@ -84,14 +84,9 @@ extension Entity where Self: NSManagedObject {
     
     func delete(manager: StoreManager = CoreDataManager.shared,
                 completion:((SaveStatus)-> Void)? = nil) {
-        let deleteRequest = NSBatchDeleteRequest(objectIDs: [self.objectID])
-        do {
-            try manager.mainContext.execute(deleteRequest)
-            manager.save(nil) { status in
-                completion?(status)
-            }
-        } catch {
-            print("Failed daleteAll")
+        manager.mainContext.delete(self)
+        manager.save(nil) { status in
+            completion?(status)
         }
     }
 }

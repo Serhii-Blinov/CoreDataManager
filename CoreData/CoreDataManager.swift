@@ -39,13 +39,14 @@ class CoreDataManager: StoreManager {
         DispatchQueue.global().async {[weak self] in
             guard let strongSelf = self else { return }
             block?()
-            guard strongSelf.privateContext.hasChanges else {
+            
+            if !strongSelf.privateContext.hasChanges && !strongSelf.mainContext.hasChanges {
                 DispatchQueue.main.async {
                     completion?(.noChanges)
                 }
                 return
             }
-            
+
             strongSelf.privateContext.perform {[weak self] in
                 do {
                     try strongSelf.privateContext.save()
