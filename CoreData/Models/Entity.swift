@@ -11,21 +11,10 @@ import CoreData
 
 extension NSManagedObject: Entity { }
 
-protocol Entity: class {
-    var descriptionName: String { get }
-    var dateStamp: Date { get }
-}
+protocol Entity: class { }
 
 extension Entity where Self: NSManagedObject {
-    
-    var descriptionName: String {
-        return Self.description()
-    }
-    
-    var dateStamp: Date {
-        return Date()
-    }
-    
+
     static func createEntity(manager: StoreManager = CoreDataManager.shared) -> Self? {
         guard let object = NSEntityDescription.insertNewObject(forEntityName: self.className,
                                                                into: manager.privateContext) as? Self else { return nil }
@@ -36,18 +25,14 @@ extension Entity where Self: NSManagedObject {
                     predicate: NSPredicate? = nil,
                     sort: [NSSortDescriptor]? = nil) -> [Self]? {
         guard let request = fetchRequest(predicate: predicate, sort: sort) as? NSFetchRequest<Self> else { return nil }
-        do {
-            return try manager.mainContext.fetch(request)
-        } catch {
-            print("Failed all")
-            return nil
-        }
+        
+        return try? manager.mainContext.fetch(request)
     }
     
     static func deleteAll(manager: StoreManager = CoreDataManager.shared,
                           predicate: NSPredicate? = nil,
                           sort: [NSSortDescriptor]? = nil,
-                          completion:((SaveStatus)-> Void)? = nil) {
+                          completion:((SaveStatus) -> Void)? = nil) {
         let request = fetchRequest(predicate: predicate, sort: sort)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         do {
@@ -63,7 +48,7 @@ extension Entity where Self: NSManagedObject {
     static func fetchedResultsController(manager: StoreManager = CoreDataManager.shared,
                                          predicate: NSPredicate? = nil,
                                          sort: [NSSortDescriptor]? = nil,
-                                         cacheName: String = "Main") -> NSFetchedResultsController<Self> {
+                                         cacheName: String? = nil) -> NSFetchedResultsController<Self> {
         let request = fetchRequest(predicate: predicate, sort: sort)
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
                                                                   managedObjectContext: manager.mainContext,

@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var addUserButton: UIButton! {
         didSet {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: addUserButton)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addUserButton)
         }
     }
     
@@ -48,7 +48,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section]
+        guard let sections = self.fetchedResultsController.sections else { return 0 }
+        let sectionInfo = sections[section]
+        
         return sectionInfo.numberOfObjects
     }
     
@@ -67,13 +69,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let user = (self.fetchedResultsController.object(at: indexPath))
-            user.delete()
+            self.fetchedResultsController.object(at: indexPath).delete()
         }
     }
     
-    func configureCell(_ cell: UITableViewCell, withEvent item: User) {
-        guard let cell = cell as? TableViewCell else { return }
+    func configureCell(_ cell: UITableViewCell?, withEvent object: Any) {
+        guard let cell = cell as? TableViewCell, let item = object as? User else { return }
         cell.titleLabel.text = item.name
         cell.detailLabel.text = item.bdate?.toString()
     }
@@ -99,14 +100,18 @@ extension ViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            self.tableView.insertRows(at: [newIndexPath!], with: .fade)
+            guard let path = newIndexPath else { return }
+            self.tableView.insertRows(at: [path], with: .fade)
         case .delete:
-            self.tableView.deleteRows(at: [indexPath!], with: .fade)
+            guard let path = indexPath else { return }
+            self.tableView.deleteRows(at: [path], with: .fade)
         case .update:
-            self.configureCell(self.tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! User)
+            guard let path = indexPath else { return }
+            self.configureCell(self.tableView.cellForRow(at: path), withEvent: anObject)
         case .move:
-            self.configureCell(self.tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! User)
-            self.tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            guard let path = newIndexPath, let oldPath = indexPath else { return }
+            self.configureCell(self.tableView.cellForRow(at: path), withEvent: anObject)
+            self.tableView.moveRow(at: oldPath, to: path)
         }
     }
     
