@@ -20,7 +20,6 @@
 		A595C57F21A594FF009AFFB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A595C57D21A594FF009AFFB9 /* LaunchScreen.storyboard */; };
 		A595C58721A5953D009AFFB9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C58621A5953D009AFFB9 /* CoreDataManager.swift */; };
 		A595C5AD21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A595C5AB21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld */; };
-		A595C5B321A5AACC009AFFB9 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C5B221A5AACC009AFFB9 /* Entity.swift */; };
 		A5DF1A1A21A6C7BF002F748F /* Crypter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF1A1921A6C7BF002F748F /* Crypter.swift */; };
 		A5DF1A1D21A6C969002F748F /* EncryptionTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */; };
 /* End PBXBuildFile section */
@@ -39,13 +38,12 @@
 		A595C57621A594FE009AFFB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A595C57B21A594FF009AFFB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A595C57E21A594FF009AFFB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A595C58021A594FF009AFFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A595C58621A5953D009AFFB9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		A595C5AC21A59BF0009AFFB9 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
-		A595C5B221A5AACC009AFFB9 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		A5DF1A1921A6C7BF002F748F /* Crypter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypter.swift; sourceTree = "<group>"; };
 		A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionTransformer.swift; sourceTree = "<group>"; };
 		A5DF1A1E21A6D3CC002F748F /* CoreDataManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoreDataManager.entitlements; sourceTree = "<group>"; };
+		C58B73D3247EB74600D16AD8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,28 +70,27 @@
 		A53B67D621A88D6B00BEFED8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A595C5B221A5AACC009AFFB9 /* Entity.swift */,
 				A53B67C021A84B6100BEFED8 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		A591D93A21A6162D00EDA604 /* CoreDataManager */ = {
+		A591D93A21A6162D00EDA604 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				A595C58021A594FF009AFFB9 /* Info.plist */,
+				C58B73D3247EB74600D16AD8 /* Info.plist */,
 				A595C57B21A594FF009AFFB9 /* Assets.xcassets */,
 				A595C57D21A594FF009AFFB9 /* LaunchScreen.storyboard */,
 				A595C57121A594FE009AFFB9 /* AppDelegate.swift */,
 			);
-			path = CoreDataManager;
+			path = App;
 			sourceTree = "<group>";
 		};
 		A595C56521A594FE009AFFB9 = {
 			isa = PBXGroup;
 			children = (
 				A53B67D121A88B5E00BEFED8 /* Extensions */,
-				A591D93A21A6162D00EDA604 /* CoreDataManager */,
+				A591D93A21A6162D00EDA604 /* App */,
 				A595C5B421A5CB27009AFFB9 /* UI */,
 				A595C57021A594FE009AFFB9 /* CoreData */,
 				A595C56F21A594FE009AFFB9 /* Products */,
@@ -216,7 +213,6 @@
 				A5DF1A1D21A6C969002F748F /* EncryptionTransformer.swift in Sources */,
 				A5DF1A1A21A6C7BF002F748F /* Crypter.swift in Sources */,
 				A53B67C221A84B6100BEFED8 /* User.swift in Sources */,
-				A595C5B321A5AACC009AFFB9 /* Entity.swift in Sources */,
 				A5501EF821A8938400E9C3D2 /* TableViewCell.swift in Sources */,
 				A595C58721A5953D009AFFB9 /* CoreDataManager.swift in Sources */,
 				A595C5AD21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld in Sources */,
@@ -369,7 +365,7 @@
 				CODE_SIGN_ENTITLEMENTS = CoreDataManager/CoreDataManager.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V73QP9H7KX;
-				INFOPLIST_FILE = "$(SRCROOT)/CoreDataManager/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -388,7 +384,7 @@
 				CODE_SIGN_ENTITLEMENTS = CoreDataManager/CoreDataManager.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V73QP9H7KX;
-				INFOPLIST_FILE = "$(SRCROOT)/CoreDataManager/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

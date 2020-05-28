@@ -12,7 +12,7 @@ public extension NSObject {
         return NSStringFromClass(type(of: self))
     }
     
-    public class var className: String {
+    class var className: String {
         return NSStringFromClass(self).components(separatedBy: ".").last ?? ""
     }
 }

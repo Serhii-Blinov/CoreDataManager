@@ -24,14 +24,24 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var removeAllUsersButton: UIButton! {
+        didSet {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: removeAllUsersButton)
+        }
+    }
+    
     let fetchedResultsController = User.fetchedResultsController(sort: [NSSortDescriptor(key:"bdate", ascending: false)])
     
     @IBAction func addUserAction(_ sender: Any) {
-        CoreDataManager.shared.save ({
+        CoreDataManager.shared.save(performBlock: {
             let user = User.createEntity()
             user?.bdate = Date()
-            user?.name = String.random(length: 25)
+            user?.name = String(String.random())
         })
+    }
+    
+    @IBAction func removeAllUserAction(_ sender: Any) {
+        User.deleteAll()
     }
     
     override func viewDidLoad() {
@@ -55,7 +65,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? TableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.className) as? TableViewCell else { return UITableViewCell() }
         let item = self.fetchedResultsController.object(at: indexPath)
         cell.titleLabel.text = item.name
         cell.detailLabel.text = item.bdate?.toString()
