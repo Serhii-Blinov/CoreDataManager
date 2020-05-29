@@ -37,6 +37,8 @@ class ViewController: UIViewController {
             let user = User.createEntity()
             user?.bdate = Date()
             user?.name = String(String.random())
+        }, completion: { _ in
+            print(User.count())
         })
     }
     
