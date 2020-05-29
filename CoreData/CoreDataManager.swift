@@ -16,6 +16,7 @@ enum SaveStatus {
 }
 
 protocol StoreManager {
+    var modelName: String { get }
     var threadContext: NSManagedObjectContext { get }
     var privateContext: NSManagedObjectContext { get }
     
@@ -28,7 +29,9 @@ class CoreDataManager: StoreManager {
     
     static var shared = CoreDataManager()
     
-    private var modelName = String()
+    var modelName: String {
+        return "CoreDataModel"
+    }
     
     private init() { }
     
@@ -46,9 +49,7 @@ class CoreDataManager: StoreManager {
     
     // MARK: - Initialization & Core Data Stack
     
-    func initialize(modelName: String = "CoreDataModel",  completion: CoreDataManagerCompletion? = nil) {
-        self.modelName = modelName
-        
+    func initialize(completion: CoreDataManagerCompletion? = nil) {
         // Fetch Persistent Store Coordinator
         guard let persistentStoreCoordinator = self.persistentStoreCoordinator else {
             fatalError("Unable to Set Up Core Data Stack")
@@ -97,7 +98,7 @@ class CoreDataManager: StoreManager {
     
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         do {
-            return try NSPersistentStoreCoordinator.coordinator(modelName: "CoreDataModel")
+            return try NSPersistentStoreCoordinator.coordinator(modelName: self.modelName)
         } catch {
             print("CoreData: Unresolved error \(error)")
         }
@@ -117,7 +118,7 @@ class CoreDataManager: StoreManager {
         
         return managedObjectContext
     }()
-
+    
     private func addPersistentStore(to persistentStoreCoordinator: NSPersistentStoreCoordinator) {
         // Helpers
         let fileManager = FileManager.default
@@ -178,74 +179,5 @@ extension NSManagedObjectContext {
         } else {
             self.performAndWait(performBlock)
         }
-    }
-}
-
-extension NSManagedObject: Entity { }
-
-protocol Entity: class { }
-
-extension Entity where Self: NSManagedObject {
-    
-    static func createEntity(manager: StoreManager = CoreDataManager.shared) -> Self? {
-        guard let object = NSEntityDescription.insertNewObject(forEntityName: self.className,
-                                                               into: manager.privateContext) as? Self else { return nil }
-        return object
-    }
-    
-    static func all(manager: StoreManager = CoreDataManager.shared,
-                    predicate: NSPredicate? = nil,
-                    sort: [NSSortDescriptor]? = nil) -> [Self]? {
-        guard let request = fetchRequest(predicate: predicate, sort: sort) as? NSFetchRequest<Self> else { return nil }
-        
-        return try? manager.threadContext.fetch(request)
-    }
-    
-    static func deleteAll(manager: StoreManager = CoreDataManager.shared,
-                          async: Bool = true,
-                          predicate: NSPredicate? = nil,
-                          sort: [NSSortDescriptor]? = nil,
-                          completion:((SaveStatus) -> Void)? = nil) {
-        manager.save(async: async, performBlock: {
-            let allObjects = all()
-            allObjects?.forEach {
-                let object = manager.threadContext.object(with: $0.objectID)
-                manager.threadContext.delete(object)
-            }
-        }) { status in
-            completion?(status)
-        }
-    }
-    
-    static func fetchedResultsController(manager: StoreManager = CoreDataManager.shared,
-                                         predicate: NSPredicate? = nil,
-                                         sort: [NSSortDescriptor]? = nil,
-                                         cacheName: String? = nil) -> NSFetchedResultsController<Self> {
-        let request = fetchRequest(predicate: predicate, sort: sort)
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                                  managedObjectContext: manager.threadContext,
-                                                                  sectionNameKeyPath: nil,
-                                                                  cacheName: cacheName)
-        return fetchedResultsController as! NSFetchedResultsController<Self>
-    }
-    
-    private static func fetchRequest(predicate: NSPredicate? = nil,
-                                     sort: [NSSortDescriptor]? = nil) -> NSFetchRequest<NSFetchRequestResult> {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.className)
-        request.predicate = predicate
-        request.returnsObjectsAsFaults = false
-        request.sortDescriptors = sort
-        
-        return request
-    }
-    
-    func delete(async: Bool = true, manager: StoreManager = CoreDataManager.shared,
-                completion:((SaveStatus)-> Void)? = nil) {
-        manager.save(async: async,
-                     performBlock: {
-            let context = manager.threadContext
-            let object = context.object(with: self.objectID)
-            manager.threadContext.delete(object)
-        }, completion: completion)
     }
 }

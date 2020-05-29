@@ -22,6 +22,7 @@
 		A595C5AD21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A595C5AB21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld */; };
 		A5DF1A1A21A6C7BF002F748F /* Crypter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF1A1921A6C7BF002F748F /* Crypter.swift */; };
 		A5DF1A1D21A6C969002F748F /* EncryptionTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */; };
+		C5B8077624813CAC003783EF /* NSManagedObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B8077524813CAC003783EF /* NSManagedObject+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionTransformer.swift; sourceTree = "<group>"; };
 		A5DF1A1E21A6D3CC002F748F /* CoreDataManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoreDataManager.entitlements; sourceTree = "<group>"; };
 		C58B73D3247EB74600D16AD8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5B8077524813CAC003783EF /* NSManagedObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				A5501EF921A8C63300E9C3D2 /* MapModel.xcmappingmodel */,
 				A5DF1A1921A6C7BF002F748F /* Crypter.swift */,
 				A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */,
+				C5B8077524813CAC003783EF /* NSManagedObject+Extensions.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				A595C57221A594FE009AFFB9 /* AppDelegate.swift in Sources */,
 				A5DF1A1D21A6C969002F748F /* EncryptionTransformer.swift in Sources */,
 				A5DF1A1A21A6C7BF002F748F /* Crypter.swift in Sources */,
+				C5B8077624813CAC003783EF /* NSManagedObject+Extensions.swift in Sources */,
 				A53B67C221A84B6100BEFED8 /* User.swift in Sources */,
 				A5501EF821A8938400E9C3D2 /* TableViewCell.swift in Sources */,
 				A595C58721A5953D009AFFB9 /* CoreDataManager.swift in Sources */,
