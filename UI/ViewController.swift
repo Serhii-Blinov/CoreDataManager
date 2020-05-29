@@ -43,7 +43,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func removeAllUserAction(_ sender: Any) {
-        User.deleteAll()
+        User.deleteAllAsync() { status in
+            print(status)
+            print(User.count())
+        }
     }
     
     override func viewDidLoad() {

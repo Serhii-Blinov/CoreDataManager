@@ -37,7 +37,7 @@ extension Entity where Self: NSManagedObject {
         return try? manager.threadContext.fetch(request)
     }
     
-    static func all(predicate: NSPredicate? = nil,
+    static func allAsync(predicate: NSPredicate? = nil,
                     sort:[NSSortDescriptor]? = nil,
                     completion:(([Self]) -> Void)? = nil) {
         guard let request = fetchRequest(predicate: predicate, sort: sort) as? NSFetchRequest<Self> else { return }
@@ -67,6 +67,26 @@ extension Entity where Self: NSManagedObject {
             }
         }) { status in
             completion?(status)
+        }
+    }
+    
+    static func deleteAllAsync(predicate: NSPredicate? = nil,
+                               sort: [NSSortDescriptor]? = nil,
+                               completion: ((SaveStatus)-> Void)? = nil) {
+        guard let request = fetchRequest(predicate: predicate, sort: sort) as? NSFetchRequest<Self> else { return }
+        let asyncRequest = NSAsynchronousFetchRequest(fetchRequest: request) { asynchronousFetchResult in
+            manager.save(async: true,
+                         performBlock: {
+                            asynchronousFetchResult.finalResult?.forEach { manager.threadContext.delete($0 as NSManagedObject) }
+            }, completion: { status in
+                completion?(status)
+            })
+        }
+        
+        do {
+            try manager.privateContext.execute(asyncRequest)
+        } catch {
+            print("Failed fetch all items. \(error.localizedDescription)")
         }
     }
     
