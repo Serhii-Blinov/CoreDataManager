@@ -55,11 +55,10 @@ extension Entity where Self: NSManagedObject {
         }
     }
     
-    static func deleteAll(async: Bool = true,
-                          predicate: NSPredicate? = nil,
+    static func deleteAll(predicate: NSPredicate? = nil,
                           sort: [NSSortDescriptor]? = nil,
                           completion:((SaveStatus) -> Void)? = nil) {
-        manager.save(async: async, performBlock: {
+        manager.save(async: true, performBlock: {
             let allObjects = all()
             allObjects?.forEach {
                 let object = manager.threadContext.object(with: $0.objectID)
