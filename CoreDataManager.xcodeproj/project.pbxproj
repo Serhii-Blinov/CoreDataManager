@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A53B67C221A84B6100BEFED8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B67C021A84B6100BEFED8 /* User.swift */; };
 		A53B67D421A88C4300BEFED8 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B67D221A88C4300BEFED8 /* String+Extensions.swift */; };
 		A53B67D521A88C4300BEFED8 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53B67D321A88C4300BEFED8 /* Date+Extensions.swift */; };
 		A5501EF821A8938400E9C3D2 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5501EF721A8938400E9C3D2 /* TableViewCell.swift */; };
@@ -19,14 +18,11 @@
 		A595C57C21A594FF009AFFB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A595C57B21A594FF009AFFB9 /* Assets.xcassets */; };
 		A595C57F21A594FF009AFFB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A595C57D21A594FF009AFFB9 /* LaunchScreen.storyboard */; };
 		A595C58721A5953D009AFFB9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595C58621A5953D009AFFB9 /* CoreDataManager.swift */; };
-		A595C5AD21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A595C5AB21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld */; };
-		A5DF1A1A21A6C7BF002F748F /* Crypter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF1A1921A6C7BF002F748F /* Crypter.swift */; };
-		A5DF1A1D21A6C969002F748F /* EncryptionTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */; };
 		C5B8077624813CAC003783EF /* NSManagedObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B8077524813CAC003783EF /* NSManagedObject+Extensions.swift */; };
+		C5DB884A252F4E9900E65EAC /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A595C5AB21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A53B67C021A84B6100BEFED8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A53B67C421A852F800BEFED8 /* CoreDataModelV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModelV2.xcdatamodel; sourceTree = "<group>"; };
 		A53B67D221A88C4300BEFED8 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		A53B67D321A88C4300BEFED8 /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -41,8 +37,6 @@
 		A595C57E21A594FF009AFFB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A595C58621A5953D009AFFB9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		A595C5AC21A59BF0009AFFB9 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
-		A5DF1A1921A6C7BF002F748F /* Crypter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypter.swift; sourceTree = "<group>"; };
-		A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionTransformer.swift; sourceTree = "<group>"; };
 		A5DF1A1E21A6D3CC002F748F /* CoreDataManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoreDataManager.entitlements; sourceTree = "<group>"; };
 		C58B73D3247EB74600D16AD8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5B8077524813CAC003783EF /* NSManagedObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extensions.swift"; sourceTree = "<group>"; };
@@ -67,14 +61,6 @@
 				A53B67D221A88C4300BEFED8 /* String+Extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		A53B67D621A88D6B00BEFED8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				A53B67C021A84B6100BEFED8 /* User.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		A591D93A21A6162D00EDA604 /* App */ = {
@@ -110,13 +96,10 @@
 		A595C57021A594FE009AFFB9 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				A53B67D621A88D6B00BEFED8 /* Models */,
 				A5DF1A1E21A6D3CC002F748F /* CoreDataManager.entitlements */,
 				A595C58621A5953D009AFFB9 /* CoreDataManager.swift */,
 				A595C5AB21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld */,
 				A5501EF921A8C63300E9C3D2 /* MapModel.xcmappingmodel */,
-				A5DF1A1921A6C7BF002F748F /* Crypter.swift */,
-				A5DF1A1C21A6C969002F748F /* EncryptionTransformer.swift */,
 				C5B8077524813CAC003783EF /* NSManagedObject+Extensions.swift */,
 			);
 			path = CoreData;
@@ -159,7 +142,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = sblinov.com;
 				TargetAttributes = {
 					A595C56D21A594FE009AFFB9 = {
@@ -210,16 +193,13 @@
 			files = (
 				A5501EFA21A8C63300E9C3D2 /* MapModel.xcmappingmodel in Sources */,
 				A53B67D421A88C4300BEFED8 /* String+Extensions.swift in Sources */,
+				C5DB884A252F4E9900E65EAC /* CoreDataModel.xcdatamodeld in Sources */,
 				A53B67D521A88C4300BEFED8 /* Date+Extensions.swift in Sources */,
 				A595C57421A594FE009AFFB9 /* ViewController.swift in Sources */,
 				A595C57221A594FE009AFFB9 /* AppDelegate.swift in Sources */,
-				A5DF1A1D21A6C969002F748F /* EncryptionTransformer.swift in Sources */,
-				A5DF1A1A21A6C7BF002F748F /* Crypter.swift in Sources */,
 				C5B8077624813CAC003783EF /* NSManagedObject+Extensions.swift in Sources */,
-				A53B67C221A84B6100BEFED8 /* User.swift in Sources */,
 				A5501EF821A8938400E9C3D2 /* TableViewCell.swift in Sources */,
 				A595C58721A5953D009AFFB9 /* CoreDataManager.swift in Sources */,
-				A595C5AD21A59BF0009AFFB9 /* CoreDataModel.xcdatamodeld in Sources */,
 				A5501EFC21A95BD200E9C3D2 /* NSObject+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +252,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -333,6 +314,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

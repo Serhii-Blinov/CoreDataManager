@@ -15,14 +15,6 @@ enum SaveStatus {
     case noChanges
 }
 
-protocol StoreManager {
-    var modelName: String { get }
-    var threadContext: NSManagedObjectContext { get }
-    var privateContext: NSManagedObjectContext { get }
-    
-    func save(async: Bool, performBlock: (()-> Void)?, completion: ((SaveStatus)-> Void)?)
-}
-
 class CoreDataManager: StoreManager {
     
     public typealias CoreDataManagerCompletion = () -> ()

@@ -32,6 +32,8 @@ class ViewController: UIViewController {
     
     let fetchedResultsController = User.fetchedResultsController(sort: [NSSortDescriptor(key:"bdate", ascending: false)])
     
+    var singleFetched: SingleFetchedResultController<SingleUser>? = nil
+    
     @IBAction func addUserAction(_ sender: Any) {
         CoreDataManager.shared.save(performBlock: {
             let user = User.createEntity()
@@ -39,6 +41,14 @@ class ViewController: UIViewController {
             user?.name = String(String.random())
         }, completion: { _ in
             print(User.count())
+        })
+        
+        CoreDataManager.shared.save(performBlock: {
+            let user = SingleUser.createEntity()
+            user?.bDate = Date()
+            user?.name = String(String.random())
+        }, completion: { _ in
+            print(SingleUser.count())
         })
     }
     
@@ -53,6 +63,20 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.fetchedResultsController.delegate = self
         try? self.fetchedResultsController.performFetch()
+        
+        let predicate = NSPredicate(format: "name != %@", "bil")
+        self.singleFetched = SingleUser.singleFetchedResultController(predicate: predicate, onChange: { (user, type) in
+            print(SingleUser.count())
+            print(user.name)
+            print(type)
+            
+        })
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            let user = SingleUser.all()?.first
+            user?.name = "Mike"
+        }
     }
 }
 
